@@ -17,8 +17,4 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.DAS.Funding.Provider.Web\SFA.DAS.Funding.Provider.Web.csproj" />
-  </ItemGroup>
-
 </Project>
