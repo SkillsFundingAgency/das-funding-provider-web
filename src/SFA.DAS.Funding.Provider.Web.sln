@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests", "SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests\SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.csproj", "{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Funding.Provider.Web", "SFA.DAS.Funding.Provider.Web\SFA.DAS.Funding.Provider.Web.csproj", "{AB4D7CFE-421B-47A0-A1FD-92E92CADB6F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web", "SFA.DAS.Funding.Provider.Web\SFA.DAS.Funding.Provider.Web.csproj", "{AB4D7CFE-421B-47A0-A1FD-92E92CADB6F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C0D34A9A-324E-4EBC-92F7-005A0C5A5249}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7876E72B-521C-4315-AF60-1946C849F0CA} = {C0D34A9A-324E-4EBC-92F7-005A0C5A5249}
+		{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10} = {C0D34A9A-324E-4EBC-92F7-005A0C5A5249}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB8A7C36-8528-4830-B45F-13EC3ED2FAB5}
