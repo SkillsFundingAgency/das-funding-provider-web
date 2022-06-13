@@ -11,6 +11,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Bindings
     public class Website
     {
         private readonly TestContext _context;
+
         public Website(TestContext context)
         {
             _context = context;
@@ -25,9 +26,8 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Bindings
             _context.Hooks.Add(authHook);
 
             _context.WebConfigurationOptions.AllowedHashstringCharacters = "46789BCDFGHJKLMNPRSTVWXY";
-            _context.WebConfigurationOptions.Hashstring = "SFA: digital apprenticeship service";
+            _context.WebConfigurationOptions.Hashstring = "Test hash-string";
             _context.WebConfigurationOptions.RedisCacheConnectionString = "localhost";
-            _context.WebConfigurationOptions.AchieveServiceBaseUrl = "https://test.achieveservice.com/service/provide-organisation-information";
             _context.WebConfigurationOptions.DataEncryptionServiceKey = "P5T1NjQ1xqo1FgFM8RG+Yg==";
  
             _context.ExternalLinksOptions = new ExternalLinksConfiguration

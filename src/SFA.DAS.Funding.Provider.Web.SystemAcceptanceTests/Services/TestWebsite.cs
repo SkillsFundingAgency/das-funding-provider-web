@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Configuration;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Hooks;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentication;
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
 {
-    public class TestWebsite : WebApplicationFactory<Program>
+    public class TestWebsite : WebApplicationFactory<Startup>
     {
         private readonly TestContext _testContext;
         private readonly Dictionary<string, string> _appConfig;
@@ -61,7 +60,6 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
                     {
                         o.AllowedHashstringCharacters = _testContext.WebConfigurationOptions.AllowedHashstringCharacters;
                         o.Hashstring = _testContext.WebConfigurationOptions.Hashstring;
-                        o.AchieveServiceBaseUrl = _testContext.WebConfigurationOptions.AchieveServiceBaseUrl;
                         o.DataEncryptionServiceKey = _testContext.WebConfigurationOptions.DataEncryptionServiceKey;
                     });
                     s.Configure<ExternalLinksConfiguration>(o =>

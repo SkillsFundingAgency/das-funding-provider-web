@@ -10,7 +10,6 @@
         public virtual string ZenDeskSnippetKey { get; set; }
         public virtual string ZenDeskSectionId { get; set; }
         public virtual string ZenDeskCobrowsingSnippetKey { get; set; }
-        public virtual string AchieveServiceBaseUrl { get; set; }
         public virtual string DataEncryptionServiceKey { get; set; }
     }
 }

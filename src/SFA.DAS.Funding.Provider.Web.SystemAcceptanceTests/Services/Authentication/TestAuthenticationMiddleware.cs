@@ -15,7 +15,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentica
         public async Task InvokeAsync(HttpContext context, ITestAuthenticationOptions options)
         {
             if (options.Claims?.Count > 0)
-            {                
+            {
                 var claimsIdentity = new ClaimsIdentity(
                     options.Claims,
                     "AuthenticationTypes.Federation"

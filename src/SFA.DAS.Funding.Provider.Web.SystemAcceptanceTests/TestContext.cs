@@ -56,6 +56,8 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests
                     new(EmployerClaimTypes.DisplayName, "FirstName and Surname"),
                     new(EmployerClaimTypes.FamilyName, "Surname")
                 };
+
+            WebConfigurationOptions = new WebConfigurationOptions();
         }
 
         public void Dispose()

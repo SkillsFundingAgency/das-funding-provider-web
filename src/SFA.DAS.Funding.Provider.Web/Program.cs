@@ -4,78 +4,92 @@ using SFA.DAS.Funding.Provider.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+Startup.ConfigureServices(builder.Services);
+Startup.AddHttpsRedirection(builder.Services, builder.Configuration["EnvironmentName"]);
+Startup.Configure(builder);
 
-builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddEnvironmentVariables()
-    .AddAzureTableStorage(options =>
-        {
-            options.ConfigurationKeys = builder.Configuration["ConfigNames"].Split(",");
-            options.StorageConnectionString = builder.Configuration["ConfigurationStorageConnectionString"];
-            options.EnvironmentName = builder.Configuration["EnvironmentName"];
-            options.PreFixConfigurationKeys = false;
-        }
-    )
-    .Build();
-
-builder.Services
-    .AddNLog()
-    ;
-
-builder.Services.AddHttpsRedirection(options =>
+public class Startup
 {
-    options.HttpsPort = builder.Configuration["EnvironmentName"] == "LOCAL" ? 5001 : 443;
-});
-
-var app = BuildApp(builder);
-app.Run();
-
-static WebApplication BuildApp(WebApplicationBuilder webApplicationBuilder)
-{
-    var webApplication = webApplicationBuilder.Build();
-
-    if (!webApplication.Environment.IsDevelopment())
+    public static void Configure(WebApplicationBuilder builder)
     {
-        webApplication.UseExceptionHandler("/error/500");
-        webApplication.UseDasHsts();
-        webApplication.UseHealthChecks();
-        webApplication.UseAuthentication();
-    }
-    else
-    {
-        webApplication.UseDeveloperExceptionPage();
-    }
+        var webApplication = builder.Build();
 
-    webApplication.UseStaticFiles();
+        var configBuilder = builder.Configuration
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddEnvironmentVariables();
 
-    webApplication.Use(async (context, next) =>
-    {
-        if (context.Response.Headers.ContainsKey("X-Frame-Options"))
+        if (!builder.Configuration["EnvironmentName"].Equals("LOCAL", StringComparison.CurrentCultureIgnoreCase))
         {
-            context.Response.Headers.Remove("X-Frame-Options");
+            configBuilder.AddAzureTableStorage(options =>
+                {
+                    options.ConfigurationKeys = builder.Configuration["ConfigNames"].Split(",");
+                    options.StorageConnectionString = builder.Configuration["ConfigurationStorageConnectionString"];
+                    options.EnvironmentName = builder.Configuration["EnvironmentName"];
+                    options.PreFixConfigurationKeys = false;
+                }
+            );
         }
 
-        context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+        configBuilder.Build();
 
-        await next();
-
-        if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+        if (!webApplication.Environment.IsDevelopment())
         {
-            // Re-execute the request so the user gets the error page
-            var originalPath = context.Request.Path.Value;
-            context.Items["originalPath"] = originalPath;
-            context.Request.Path = "/error/404";
+            webApplication.UseExceptionHandler("/error/500");
+            webApplication.UseDasHsts();
+            webApplication.UseHealthChecks();
+            webApplication.UseAuthentication();
+        }
+        else
+        {
+            webApplication.UseDeveloperExceptionPage();
+        }
+
+        webApplication.UseStaticFiles();
+
+        webApplication.Use(async (context, next) =>
+        {
+            if (context.Response.Headers.ContainsKey("X-Frame-Options"))
+            {
+                context.Response.Headers.Remove("X-Frame-Options");
+            }
+
+            context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+
             await next();
-        }
-    });
 
-    webApplication.UseRouting();
+            if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+            {
+                // Re-execute the request so the user gets the error page
+                var originalPath = context.Request.Path.Value;
+                context.Items["originalPath"] = originalPath;
+                context.Request.Path = "/error/404";
+                await next();
+            }
+        });
 
-    webApplication.UseAuthorization();
+        webApplication.UseRouting();
 
-    webApplication.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    return webApplication;
+        webApplication.UseAuthorization();
+
+        webApplication.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        webApplication.Run();
+    }
+
+    public static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddControllersWithViews();
+        services.AddNLog();
+    }
+
+    public static void AddHttpsRedirection(IServiceCollection services, string environment)
+    {
+        services.AddHttpsRedirection(options =>
+        {
+            options.HttpsPort = environment == "LOCAL" ? 5001 : 443;
+        });
+    }
 }
+

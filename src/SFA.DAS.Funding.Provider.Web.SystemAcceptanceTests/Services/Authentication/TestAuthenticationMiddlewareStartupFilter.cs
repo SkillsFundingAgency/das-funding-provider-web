@@ -10,7 +10,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentica
             return builder =>
             {
                 builder.UseMiddleware<TestAuthenticationMiddlewareForAchieveService>();
-                builder.UseMiddleware<TestAuthenticationMiddleware>();                
+                builder.UseMiddleware<TestAuthenticationMiddleware>();
                 next(builder);
             };
         }
