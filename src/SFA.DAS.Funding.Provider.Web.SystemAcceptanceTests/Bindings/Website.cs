@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Configuration;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Hooks;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services;
+using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentication;
 using SFA.DAS.HashingService;
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Bindings
@@ -40,6 +41,8 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Bindings
             _context.Website = new TestWebsite(_context, hook, authHook);
             _context.WebsiteClient = _context.Website.CreateClient();
             _context.HashingService = (_context.Website.Services.GetService(typeof(IHashingService)) as IHashingService)!;
+
+            var authmiddleware = _context.Website.Services.GetService(typeof(TestAuthenticationMiddleware));
         }
     }
 }

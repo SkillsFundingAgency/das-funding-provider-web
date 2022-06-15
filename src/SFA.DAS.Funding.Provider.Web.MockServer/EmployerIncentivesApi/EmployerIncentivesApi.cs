@@ -5,7 +5,7 @@ using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services;
 using WireMock.Logging;
 using WireMock.Server;
 
-namespace SFA.DAS.Funding.Provider.Web.MockServer.FundingProviderApi
+namespace SFA.DAS.Funding.Provider.Web.MockServer.EmployerIncentivesApi
 {
     public class FundingProviderApiBuilder
     {

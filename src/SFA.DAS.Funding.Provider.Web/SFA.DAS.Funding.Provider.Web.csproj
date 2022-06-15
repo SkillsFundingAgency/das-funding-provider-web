@@ -8,15 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.NLogTarget" Version="2.20.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.6" />
     <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="NLog.Targets.Redis" Version="3.0.0" />
     <PackageReference Include="NLog.Web" Version="5.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
     <PackageReference Include="Scrutor.AspNetCore" Version="3.3.0" />
+    <PackageReference Include="SFA.DAS.Authorization" Version="6.0.97" />
     <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="3.0.84" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SFA.DAS.CosmosDb" Version="1.0.47" />
+    <PackageReference Include="SFA.DAS.HashingService" Version="1.0.183" />
     <PackageReference Include="SFA.DAS.Http" Version="3.2.69" />
     <PackageReference Include="SFA.DAS.NLog.Targets.Redis" Version="1.2.1" />
   </ItemGroup>

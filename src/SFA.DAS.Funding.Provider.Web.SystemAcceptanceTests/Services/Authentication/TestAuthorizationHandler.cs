@@ -18,16 +18,32 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentica
 
         public async Task HandleAsync(AuthorizationHandlerContext context)
         {
-            try
+            if (_authContextHook != null)
             {
-                _authContextHook.OnReceived(context);
-                await _handler.HandleAsync(context);
-                _authContextHook.OnProcessed(context);
+                try
+                {
+                    if (_authContextHook?.OnReceived != null)
+                    {
+                        _authContextHook.OnReceived(context);
+                    }
+                    await _handler.HandleAsync(context);
+                    if (_authContextHook?.OnProcessed != null)
+                    {
+                        _authContextHook.OnProcessed(context);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_authContextHook?.OnErrored != null)
+                    {
+                        _authContextHook.OnErrored(ex, context);
+                    }
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _authContextHook.OnErrored(ex, context);
-                throw;
+                await _handler.HandleAsync(context);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
 using SFA.DAS.Funding.Provider.Web.Models;
 using System.Diagnostics;
 
@@ -11,6 +13,23 @@ namespace SFA.DAS.Funding.Provider.Web.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        [Route("")]
+        [AllowAnonymous()]
+        public async Task<IActionResult> AnonymousHome()
+        {
+            return RedirectToAction("login");
+        }
+
+        [Route("/login")]
+        public async Task<IActionResult> Login()
+        {
+            if (User.HasClaim(c => c.Type.Equals(EmployerClaimTypes.Account)))
+            {
+                // return RedirectToAction("Home", new { accountId = User.Claims.First(c => c.Type.Equals(EmployerClaimTypes.Account)).Value });
+            }
+            return Forbid();
         }
 
         public IActionResult Index()

@@ -15,16 +15,32 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
 
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            try
+            if (_actionResultHook != null)
             {
-                _actionResultHook.OnReceived(context.Result);
-                await next();
-                _actionResultHook.OnProcessed(context.Result);
+                try
+                {
+                    if (_actionResultHook?.OnReceived != null)
+                    {
+                        _actionResultHook.OnReceived(context.Result);
+                    }
+                    await next();
+                    if (_actionResultHook?.OnProcessed != null)
+                    {
+                        _actionResultHook.OnProcessed(context.Result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_actionResultHook?.OnErrored != null)
+                    {
+                        _actionResultHook.OnErrored(ex, context.Result);
+                    }
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _actionResultHook.OnErrored(ex, context.Result);
-                throw;
+                await next();
             }
         }
     }

@@ -52,7 +52,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
             builder
                 .ConfigureServices(s =>
                 {
-                    s.AddTransient<TestAuthenticationMiddleware>();
+                    // s.AddTransient<TestAuthenticationMiddleware>();
                     s.AddScoped<ITestAuthenticationOptions, TestAuthenticationOptions>(_ => new TestAuthenticationOptions(_testContext.Claims));
                     s.AddTransient<IStartupFilter, TestAuthenticationMiddlewareStartupFilter>();
 
@@ -85,6 +85,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
                     });
 
                     s.Decorate<IAuthorizationHandler>((handler, _) => new TestAuthorizationHandler(handler, _authContextHook));
+
                 });
         }
     }
