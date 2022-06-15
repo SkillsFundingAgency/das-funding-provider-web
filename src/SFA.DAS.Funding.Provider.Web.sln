@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.We
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C0D34A9A-324E-4EBC-92F7-005A0C5A5249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.Funding.Provider.Web.MockServer", "SFA.DAS.Funding.Provider.Web.MockServer\SFA.DAS.Funding.Provider.Web.MockServer.csproj", "{EFF066F3-E70E-4053-A786-A9D70A24C28A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web.MockServer", "SFA.DAS.Funding.Provider.Web.MockServer\SFA.DAS.Funding.Provider.Web.MockServer.csproj", "{EFF066F3-E70E-4053-A786-A9D70A24C28A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

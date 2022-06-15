@@ -10,7 +10,7 @@ using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentication
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
 {
-    public class TestWebsite : WebApplicationFactory<Startup>
+    public class TestWebsite : WebApplicationFactory<Program>
     {
         private readonly TestContext _testContext;
         private readonly Dictionary<string, string> _appConfig;

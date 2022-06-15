@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentication;
 using System.Security.Claims;
@@ -24,23 +25,34 @@ namespace SFA.DAS.Funding.Provider.Web.MockServer
 
         public LocalWebSite Build()
         {
-            var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+            var application = new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
             {
-                ApplicationName = typeof(Program).Assembly.FullName,
-                ContentRootPath = Directory.GetCurrentDirectory(),
-                EnvironmentName = "LOCAL"
+                builder.ConfigureServices(services =>
+                {
+                    services
+                        .AddTransient<TestAuthenticationMiddleware>()
+                        .AddScoped<ITestAuthenticationOptions, TestAuthenticationOptions>(_ => new TestAuthenticationOptions(_claims))
+                        .AddTransient<IStartupFilter, TestAuthenticationMiddlewareStartupFilter>();
+                });
             });
 
-            Startup.ConfigureServices(builder.Services);
-            Startup.AddHttpsRedirection(builder.Services, "LOCAL");
+            //var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+            //{
+            //    ApplicationName = typeof(Program).Assembly.FullName,
+            //    ContentRootPath = Directory.GetCurrentDirectory(),
+            //    EnvironmentName = "LOCAL"
+            //});
 
-            builder
-                .Services.AddTransient<TestAuthenticationMiddleware>()
-                    .AddScoped<ITestAuthenticationOptions, TestAuthenticationOptions>(_ => new TestAuthenticationOptions(_claims))
-                    .AddTransient<IStartupFilter, TestAuthenticationMiddlewareStartupFilter>()
-            ;
+            //Startup.ConfigureServices(builder.Services);
+            //Startup.AddHttpsRedirection(builder.Services, "LOCAL");
 
-            _host = builder.Build();
+            //builder
+            //    .Services
+            //;
+
+            //_host = application.`
+           // _host = builder.Build();
             
             return this;
         }

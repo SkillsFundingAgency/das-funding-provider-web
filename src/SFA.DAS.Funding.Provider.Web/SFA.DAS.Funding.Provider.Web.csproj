@@ -11,6 +11,7 @@
     <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="NLog.Targets.Redis" Version="3.0.0" />
+    <PackageReference Include="NLog.Web" Version="5.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
     <PackageReference Include="Scrutor.AspNetCore" Version="3.3.0" />
     <PackageReference Include="SFA.DAS.Configuration.AzureTableStorage" Version="3.0.84" />
@@ -23,5 +24,9 @@
   <ItemGroup>
     <Folder Include="Infrastructure\NewFolder\" />
   </ItemGroup>
+
+    <ItemGroup>
+	    <InternalsVisibleTo Include="SFA.DAS.Funding.Provider.Web.MockServer" />
+    </ItemGroup>
 
 </Project>
