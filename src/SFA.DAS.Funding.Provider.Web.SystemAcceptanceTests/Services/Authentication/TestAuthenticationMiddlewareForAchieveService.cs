@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using System.Security.Claims;
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentication
@@ -21,14 +21,14 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.Authentica
                 return;
             }
 
-            var accountClaim = options.Claims.SingleOrDefault(c => c.Type == EmployerClaimTypes.Account);
+            var accountClaim = options.Claims.SingleOrDefault(c => c.Type == ProviderClaims.UserId);
 
             options.Claims.Remove(accountClaim);
-            options.Claims.Add(new Claim(EmployerClaimTypes.Account, "SERVICE"));
+            options.Claims.Add(new Claim(ProviderClaims.UserId, "SERVICE"));
             
             await _next(context);
 
-            options.Claims.Remove(options.Claims.SingleOrDefault(c => c.Type == EmployerClaimTypes.Account));
+            options.Claims.Remove(options.Claims.SingleOrDefault(c => c.Type == ProviderClaims.UserId));
             options.Claims.Add(accountClaim);
         }
     }

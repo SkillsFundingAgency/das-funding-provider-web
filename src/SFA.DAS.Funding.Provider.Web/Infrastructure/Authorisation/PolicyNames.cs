@@ -1,9 +1,11 @@
-﻿namespace SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation
 {
+    [ExcludeFromCodeCoverage]
     public static class PolicyNames
     {
-        public static string IsAuthenticated => nameof(IsAuthenticated);
-        public static string HasEmployerAccount => nameof(HasEmployerAccount);
         public static string AllowAnonymous => nameof(AllowAnonymous);
+        public static string HasProviderAccount => nameof(HasProviderAccount);
     }
 }

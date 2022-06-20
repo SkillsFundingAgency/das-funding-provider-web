@@ -34,7 +34,9 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
                 { "Identity:ClientSecret", "secret" },
                 { "Identity:BaseAddress", @"https://localhost:8082/identity" },
                 { "Identity:Scopes", "openid profile" },
-                { "Identity:UsePkce", "false" }
+                { "Identity:UsePkce", "false" },
+                { "ProviderIdams:MetadataAddress", @"https://localhost:8082/identity" },
+                { "ProviderIdams:Wtrealm", "AppID" },
             };
         }
 

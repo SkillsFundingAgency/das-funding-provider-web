@@ -4,6 +4,7 @@ using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Hooks;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services;
 using SFA.DAS.HashingService;
 using System.Security.Claims;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.FundingProviderApi;
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests
@@ -48,13 +49,10 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests
 
             Claims = new List<Claim>
                 {
-                    new(EmployerClaimTypes.UserId, TestData.User.AccountOwnerUserId.ToString()),
-                    new(EmployerClaimTypes.Account, TestData.User.AuthenticatedHashedId),
-                    new(EmployerClaimTypes.EmailAddress, "test@test.com"),
-                    new(EmployerClaimTypes.GivenName, "FirstName"),
-                    new(EmployerClaimTypes.FamilyName, "Surname"),
-                    new(EmployerClaimTypes.DisplayName, "FirstName and Surname"),
-                    new(EmployerClaimTypes.FamilyName, "Surname")
+                    new(ProviderClaims.UserId, TestData.User.AccountOwnerUserId.ToString()),
+                    new(ProviderClaims.Service, "Service"),
+                    new(ProviderClaims.DisplayName, "FirstName and Surname"),
+                    new(ProviderClaims.UserId, "UserId")
                 };
 
             WebConfigurationOptions = new WebConfigurationOptions();

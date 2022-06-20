@@ -48,14 +48,13 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.StepDefinitions
         [Then(@"the user is asked to log on")]
         public void ThenTheUserisAskedToLogOn()
         {
-            var response = _testDataStore.Get<HttpResponseMessage>("Response");
+            _testDataStore.Get<HttpResponseMessage>("Response");
 
             var challengeResult = _testContext.ActionResult.LastActionResult as ChallengeResult;
             challengeResult.Should().NotBeNull();
 
-            _authContext.Requirements.Count().Should().Be(2);
-            _authContext.Requirements.SingleOrDefault(r => r is IsAuthenticatedRequirement).Should().NotBeNull();
-            _authContext.Requirements.SingleOrDefault(r => r is EmployerAccountRequirement).Should().NotBeNull();
+            _authContext.Requirements.Count().Should().Be(4);
+            _authContext.Requirements.SingleOrDefault(r => r is ProviderUkPrnRequirement).Should().NotBeNull();
         }
     }
 }

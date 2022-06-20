@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using SFA.DAS.Authorization.Context;
 using SFA.DAS.Authorization.DependencyResolution.Microsoft;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.Funding.Provider.Web;
-using SFA.DAS.Funding.Provider.Web.Infrastructure;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
-using SFA.DAS.Funding.Provider.Web.Infrastructure.Configuration;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.DataProtection;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,27 +86,72 @@ static void Configure(WebApplicationBuilder builder)
 
 static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
 {
+    services.Configure<CookiePolicyOptions>(options =>
+    {
+        options.CheckConsentNeeded = context => true;
+        options.MinimumSameSitePolicy = SameSiteMode.None;
+    });
+
     services.AddControllersWithViews();
     services.AddNLog();
 
-    services.AddAuthorizationPolicies();
-    services.AddAuthorization<DefaultAuthorizationContextProvider>();
+    services.AddSingleton<IAuthorizationHandler, ProviderAuthorisationHandler>();
 
-    var identityServerOptions = new IdentityServerOptions();
-    configuration.GetSection(IdentityServerOptions.IdentityServerConfiguration).Bind(identityServerOptions);
-    services.AddEmployerAuthentication(identityServerOptions);
+    services.AddAuthorization<DefaultAuthorizationContextProvider>();
+    services.AddAuthorisationServicePolicies();
+
+    if (UseAuthenticationStub(configuration))
+    {
+        services.AddProviderStubAuthentication();
+    }
+    else
+    {
+        if (!IsDevOrLocalEnvironment(configuration))
+        {
+            var providerConfig = configuration
+                .GetSection(nameof(ProviderIdams))
+                .Get<ProviderIdams>();
+            services.AddAndConfigureProviderAuthentication(providerConfig);
+        }
+    }
 
     services.Configure<IISServerOptions>(options => { options.AutomaticAuthentication = false; });
+
+    services.Configure<RouteOptions>(options => { options.LowercaseUrls = true; });
 
     services.AddMvc(
             options =>
             {
-                options.Filters.Add(new AuthorizeFilter(PolicyNames.IsAuthenticated));
-                options.Filters.Add(new AuthorizeFilter(PolicyNames.HasEmployerAccount));
+                options.Filters.Add(new AuthorizeFilter(PolicyNames.HasProviderAccount));
                 options.EnableEndpointRouting = false;
                 options.SuppressOutputFormatterBuffering = true;
+
+                if (!IsDevOrLocalEnvironment(configuration))
+                {
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                }
             })
         .AddControllersAsServices();
+
+
+    services.AddHealthChecks();
+    services.AddDataProtection(configuration);
+
+    services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(10);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.IsEssential = true;
+    });
+
+    services.AddApplicationInsightsTelemetry(configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+}
+
+static bool IsDevOrLocalEnvironment(IConfiguration configuration)
+{
+    return configuration["EnvironmentName"].Equals("LOCAL", StringComparison.CurrentCultureIgnoreCase)
+           || configuration["EnvironmentName"].Equals("DEVELOPMENT", StringComparison.CurrentCultureIgnoreCase);
 }
 
 static void AddHttpsRedirection(IServiceCollection services, string environment)
@@ -111,5 +159,14 @@ static void AddHttpsRedirection(IServiceCollection services, string environment)
     services.AddHttpsRedirection(options => options.HttpsPort = environment == "LOCAL" ? 5001 : 443);
 }
 
+static bool UseAuthenticationStub(IConfiguration configuration)
+{
+    return configuration["StubProviderAuth"] != null && configuration["StubProviderAuth"].Equals("true", StringComparison.CurrentCultureIgnoreCase);
+}
+
+#pragma warning disable S1118 // Utility classes should not have public constructors
+#pragma warning disable S3903 // Types should be defined in named namespaces
 public partial class Program { }
+#pragma warning restore S3903 // Types should be defined in named namespaces
+#pragma warning restore S1118 // Utility classes should not have public constructors
 

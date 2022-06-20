@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using SFA.DAS.Funding.Provider.Web.Models;
 using System.Diagnostics;
 
@@ -25,7 +25,7 @@ namespace SFA.DAS.Funding.Provider.Web.Controllers
         [Route("/login")]
         public async Task<IActionResult> Login()
         {
-            if (User.HasClaim(c => c.Type.Equals(EmployerClaimTypes.Account)))
+            if (User.HasClaim(c => c.Type.Equals(ProviderClaims.UserId)))
             {
                 // return RedirectToAction("Home", new { accountId = User.Claims.First(c => c.Type.Equals(EmployerClaimTypes.Account)).Value });
             }
