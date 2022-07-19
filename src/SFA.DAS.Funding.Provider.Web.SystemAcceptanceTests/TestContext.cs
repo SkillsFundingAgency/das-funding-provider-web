@@ -1,11 +1,10 @@
-﻿using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
+﻿using SFA.DAS.Encoding;
+using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Configuration;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Hooks;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services;
-using SFA.DAS.HashingService;
-using System.Security.Claims;
-using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services.FundingProviderApi;
+using System.Security.Claims;
 
 namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests
 {
@@ -16,7 +15,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests
         public TestCosmosDb ReadStore { get; set; }        
         public HttpClient WebsiteClient { get; set; }
         public TestFundingProviderApi FundingProviderApi { get; set; }
-        public IHashingService HashingService { get; set; }
+        public IEncodingService HashingService { get; set; }
         public TestDataStore TestDataStore { get; set; }
         public List<IHook> Hooks { get; set; }
         public List<Claim> Claims { get; set; }

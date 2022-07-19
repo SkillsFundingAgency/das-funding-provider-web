@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests\SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.csproj" />
-    <ProjectReference Include="..\SFA.DAS.Funding.Provider.Web\SFA.DAS.Funding.Provider.Web.csproj" />
   </ItemGroup>
 
 </Project>
