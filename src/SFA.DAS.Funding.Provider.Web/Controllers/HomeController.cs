@@ -17,19 +17,19 @@ namespace SFA.DAS.Funding.Provider.Web.Controllers
 
         [Route("")]
         [AllowAnonymous()]
-        public async Task<IActionResult> AnonymousHome()
+        public Task<IActionResult> AnonymousHome()
         {
-            return RedirectToAction("login");
+            return Task.FromResult<IActionResult>(RedirectToAction("login"));
         }
 
         [Route("/login")]
-        public async Task<IActionResult> Login()
+        public Task<IActionResult> Login()
         {
             if (User.HasClaim(c => c.Type.Equals(ProviderClaims.UserId)))
             {
                 // return RedirectToAction("Home", new { accountId = User.Claims.First(c => c.Type.Equals(EmployerClaimTypes.Account)).Value });
             }
-            return Forbid();
+            return Task.FromResult<IActionResult>(Forbid());
         }
 
         public IActionResult Index()

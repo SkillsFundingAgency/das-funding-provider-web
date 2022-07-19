@@ -8,7 +8,6 @@ using SFA.DAS.Funding.Provider.Web;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Authentication;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.Authorisation;
 using SFA.DAS.Funding.Provider.Web.Infrastructure.DataProtection;
-using SFA.DAS.Funding.Provider.Web.Infrastructure.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,8 +64,8 @@ static void Configure(WebApplicationBuilder builder)
 
         if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
         {
-                // Re-execute the request so the user gets the error page
-                var originalPath = context.Request.Path.Value;
+            // Re-execute the request so the user gets the error page
+            var originalPath = context.Request.Path.Value;
             context.Items["originalPath"] = originalPath;
             context.Request.Path = "/error/404";
             await next();
@@ -88,12 +87,11 @@ static void ConfigureServices(IServiceCollection services, IConfiguration config
 {
     services.Configure<CookiePolicyOptions>(options =>
     {
-        options.CheckConsentNeeded = context => true;
+        options.CheckConsentNeeded = _ => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
     });
 
     services.AddControllersWithViews();
-    services.AddNLog();
 
     services.AddSingleton<IAuthorizationHandler, ProviderAuthorisationHandler>();
 

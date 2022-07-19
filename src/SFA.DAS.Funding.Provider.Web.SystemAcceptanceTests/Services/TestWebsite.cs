@@ -54,7 +54,6 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services
             builder
                 .ConfigureServices(s =>
                 {
-                    // s.AddTransient<TestAuthenticationMiddleware>();
                     s.AddScoped<ITestAuthenticationOptions, TestAuthenticationOptions>(_ => new TestAuthenticationOptions(_testContext.Claims));
                     s.AddTransient<IStartupFilter, TestAuthenticationMiddlewareStartupFilter>();
 

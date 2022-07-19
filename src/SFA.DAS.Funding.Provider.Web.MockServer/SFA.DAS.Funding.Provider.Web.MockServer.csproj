@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WireMock.Net.StandAlone" Version="1.5.0" />
+    <PackageReference Include="WireMock.Net.StandAlone" Version="1.5.1" />
   </ItemGroup>
 
   <ItemGroup>

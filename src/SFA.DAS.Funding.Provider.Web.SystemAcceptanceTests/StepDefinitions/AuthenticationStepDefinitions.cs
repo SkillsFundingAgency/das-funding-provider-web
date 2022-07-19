@@ -11,19 +11,14 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.StepDefinitions
     {
         private readonly TestContext _testContext;
         private readonly TestDataStore _testDataStore;
-        private AuthorizationHandlerContext _authContext;
+        private AuthorizationHandlerContext? _authContext;
 
         public AuthenticationStepDefinitions(TestContext testContext) : base(testContext)
         {
             _testContext = testContext;
             _testDataStore = _testContext.TestDataStore;
             var hook = _testContext.Hooks.SingleOrDefault(h => h is Hook<AuthorizationHandlerContext>) as Hook<AuthorizationHandlerContext>;
-            hook.OnProcessed = (c) => {
-                if (_authContext == null)
-                {
-                    _authContext = c;
-                }
-            };
+            hook!.OnProcessed = (c) => { _authContext ??= c; };
         }
 
         [Given(@"a user of the system has not logged on")]
@@ -53,7 +48,7 @@ namespace SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.StepDefinitions
             var challengeResult = _testContext.ActionResult.LastActionResult as ChallengeResult;
             challengeResult.Should().NotBeNull();
 
-            _authContext.Requirements.Count().Should().Be(4);
+            _authContext!.Requirements.Count().Should().Be(4);
             _authContext.Requirements.SingleOrDefault(r => r is ProviderUkPrnRequirement).Should().NotBeNull();
         }
     }
