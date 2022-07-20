@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Security.Claims;
 using Newtonsoft.Json;
-using SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.Services;
+using SFA.DAS.Funding.Provider.Web.AcceptanceTests.Services;
 using WireMock.Logging;
 using WireMock.Server;
 
