@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web.Tests", "SFA.DAS.Funding.Provider.Web.Tests\SFA.DAS.Funding.Provider.Web.Tests.csproj", "{7876E72B-521C-4315-AF60-1946C849F0CA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests", "SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests\SFA.DAS.Funding.Provider.Web.SystemAcceptanceTests.csproj", "{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.Funding.Provider.Web", "SFA.DAS.Funding.Provider.Web\SFA.DAS.Funding.Provider.Web.csproj", "{AB4D7CFE-421B-47A0-A1FD-92E92CADB6F5}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7876E72B-521C-4315-AF60-1946C849F0CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7876E72B-521C-4315-AF60-1946C849F0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7876E72B-521C-4315-AF60-1946C849F0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7876E72B-521C-4315-AF60-1946C849F0CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7876E72B-521C-4315-AF60-1946C849F0CA} = {C0D34A9A-324E-4EBC-92F7-005A0C5A5249}
 		{EFBAFE3F-C7A3-4ED5-9ABB-D90570390A10} = {C0D34A9A-324E-4EBC-92F7-005A0C5A5249}
 		{EFF066F3-E70E-4053-A786-A9D70A24C28A} = {C0D34A9A-324E-4EBC-92F7-005A0C5A5249}
 	EndGlobalSection

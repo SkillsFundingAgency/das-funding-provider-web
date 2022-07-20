@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace SFA.DAS.Funding.Provider.Web.Tests
+namespace SFA.DAS.Funding.Provider.Web.UnitTests
 {
     public class Tests
     {
