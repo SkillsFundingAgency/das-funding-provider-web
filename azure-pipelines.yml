@@ -6,7 +6,7 @@ trigger:
 
 variables:
 - name: SolutionBaseName
-  value: SFA.DAS.ProviderPayments.Web
+  value: SFA.DAS.Funding.Provider.Web
 - name: BuildConfiguration
   value: release
 - name: BuildPlatform
